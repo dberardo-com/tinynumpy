@@ -706,3 +706,18 @@ def std(a, axis=None, ddof=0):
 def var(a, axis=None, ddof=0):
     s = std(a, axis=axis, ddof=ddof)
     return s * s
+
+
+
+def concatenate(seq, axis=0, out=None, dtype=None, casting="same_kind"):
+    seq = list(seq)
+    if axis in (None, 0):
+        out = []
+        for x in seq:
+            x = _unwrap(x)
+            if isinstance(x, (list, tuple, ndarray)):
+                out.extend(list(x))
+            else:
+                out.append(x)
+        return ndarray(out)
+    return ndarray(seq)
